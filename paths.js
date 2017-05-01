@@ -25,7 +25,8 @@ Paths.makeCertPaths = function (host) {
   return {
     key: `${Paths.hostsDir}/${host}.key`,
     csr: `${Paths.hostsDir}/${host}.csr`,
-    crt: `${Paths.hostsDir}/${host}.crt`
+    crt: `${Paths.hostsDir}/${host}.crt`,
+    ext: `${Paths.hostsDir}/${host}.ext`
   };
 };
 
