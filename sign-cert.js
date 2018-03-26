@@ -9,15 +9,24 @@ const AppPaths = require('./paths');
 const Log = require('./log');
 
 function ext(host) {
-  return `
+  var result = `
     authorityKeyIdentifier=keyid,issuer
     basicConstraints=CA:FALSE
     keyUsage=digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
     subjectAltName=@alt_names
 
     [alt_names]
-    DNS.1=${host}
-  `;
+    DNS.1=${host}`;
+  
+  // if the user is requesting a wildcarded certificate add the root as well
+  if (host != null && host.startsWith("*.")) {
+    hostNoWildcard = host.substring(2);
+    result = `
+      ${result}
+      DNS.2=${hostNoWildcard}`;
+  }
+
+  return result;
 }
 
 module.exports = function (host) {
